@@ -5,17 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Management App</title>
     <script src ="script.js", defer></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
     <main>
         <h1>Task Manager App</h1>
-        <!-- Task -->
+        <!-- 1. Task Input Area -->
         <div>
-            <div>
-                <input type="text" id="" placeholder="task name...">
-            </div>
+            <input type="text" id="taskInput" placeholder="task name...">
             <!-- Categories  -->
-            <select>
+            <select id="categorySelect">
                 <option disabled selected>Categories</option>
                 <option value="school">School</option>
                 <option value="work">Work</option>
@@ -23,10 +23,10 @@
             </select>
 
             <!-- Deadline  -->
-            <input type="date" name="" id="">
+            <input type="date" id="deadlineInput">
 
             <!-- Status  -->
-            <select>
+            <select id="statusSelect">
                 <option disabled selected>Status</option>
                 <option value="pending">Pending</option>
                 <option value="inprogress">In Progress</option>
@@ -34,8 +34,48 @@
             </select>
 
             <!-- Add Task Button  -->
-            <button>Add Task</button>
+            <button id = "addTaskBtn">Add Task</button>
         </div>
+
+        <!-- 2. Task Filter Bar -->
+        <div>
+             <!-- Search Box -->
+              <input type ="text", id = "searchInput", placeholder="Search task ..."> 
+             <!-- Category Filter-->
+              <select id="categoryFilter">
+                <option value="all">All Categories</option>
+                <option value="work">Work</option>
+                <option value="personal">Personal</option>
+                <option value="study">Study</option>
+             </select>
+             <!-- Status Filter -->
+             <select id="statusFilter">
+                <option disabled selected>All Status</option>
+                <option value="pending">Pending</option>
+                <option value="inprogress">In Progress</option>
+                <option value="completed">Completed</option>
+             </select>
+             <!-- Filter Button -->
+             <button id = "startFilterBtn">Filter</button>
+        </div>
+        <!-- 3. Task Display Area -->
+        <div>
+            <p>Here are the tasks you are looking for...</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Task </th>
+                        <th>Category</th>
+                        <th>DeadLine</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id = "taskTable">
+                </tbody>
+            </table>
+        </div>
+
+
     </main>
 </body>
 </html>
