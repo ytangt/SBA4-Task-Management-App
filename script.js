@@ -8,7 +8,7 @@ const deadlineInput = document.getElementById("deadlineInput");
 const statusSelect = document.getElementById("statusSelect");
 const addTaskBtn = document.getElementById("addTaskBtn");
 const startFilterBtn = document.getElementById("startFilterBtn");
-
+const message = document.getElementById("message");
 // Handler functions
 addTaskBtn.addEventListener('click', ()=>{
     const text = taskInput.value;
