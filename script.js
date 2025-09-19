@@ -1,4 +1,3 @@
-
 const tasks = [];
 
 //UI
@@ -7,10 +6,13 @@ const categorySelect = document.getElementById("categorySelect");
 const deadlineInput = document.getElementById("deadlineInput");
 const statusSelect = document.getElementById("statusSelect");
 const message = document.getElementById("message");
+const addTaskBtn = document.getElementById("addTaskBtn");
+const startFilterBtn = document.getElementById("startFilterBtn");
 
-const searchInput = document.getElementById("searchInput")
-const categoryFilter = document.getElementById("categoryFilter")
-const statusFilter = document.getElementById("statusFilter")
+const searchInput = document.getElementById("searchInput");
+const categoryFilter = document.getElementById("categoryFilter");
+const statusFilter = document.getElementById("statusFilter");
+const taskTable = document.getElementById("taskTable");
 
 // Handler functions
 addTaskBtn.addEventListener('click', ()=>{
@@ -46,12 +48,11 @@ startFilterBtn.addEventListener('click',()=>{
     //search category
     const isMatchCategory = selectedCategory === "all" || task.category === selectedCategory;
     //serach status
-    const isMatchStatus = selectedStatus === "All Status" || task.status === selectedStatus;
+    const isMatchStatus = selectedStatus === "all" || task.status === selectedStatus;
 
     return isMatchText && isMatchCategory && isMatchStatus;
   })
 
-  
   displayAllTasks(filteredTasks);
   if (filteredTasks.length === 0) {
     message.textContent = "No tasks match your filter.";
@@ -63,19 +64,51 @@ startFilterBtn.addEventListener('click',()=>{
   // clear the input
     searchInput.value = "";
     categoryFilter.value = "all";
-    statusFilter.value = "All Status";
+    statusFilter.value = "all";
 })
 
+
+ //function overdue mark
+  function isOverDue(task) {
+    const now = new Date();
+    const deadline = new Date(task.deadline);
+    if((task.status !== "completed") && now > deadline )
+    return true;
+  }
+
 //display all task in diaplay table
-function displayAllTasks (lists){
-    taskTable.innerHTML = "";
-    lists.forEach(i => {
-        const taskRow = document.createElement("tr");
-        taskRow.innerHTML = `<td>${i.text}</td> 
-                             <td>${i.category}</td> 
-                             <td>${i.deadline}</td> 
-                             <td>${i.status}</td> `;
-        taskTable.appendChild(taskRow);
+function displayAllTasks(lists) {
+  taskTable.innerHTML = ""; 
+
+  lists.forEach(i => {
+    const taskRow = document.createElement("tr");
+
+    const textCell = document.createElement("td");
+    textCell.textContent = i.text;
+
+    const categoryCell = document.createElement("td");
+    categoryCell.textContent = i.category;
+
+    const deadlineCell = document.createElement("td");
+    deadlineCell.textContent = i.deadline;
+
+    const statusCell = document.createElement("td");
+    statusCell.textContent = i.status;
+
+    // check if overdue 
+    if (isOverDue(i)) {
+      const overDueBadge = document.createElement("span");
+      overDueBadge.setAttribute("class", "badge bg-danger ms-2");
+      overDueBadge.textContent = "Overdue";
+      statusCell.appendChild(overDueBadge);
+    }
+
+    taskRow.appendChild(textCell);
+    taskRow.appendChild(categoryCell);
+    taskRow.appendChild(deadlineCell);
+    taskRow.appendChild(statusCell);
+
+    taskTable.appendChild(taskRow);
     });
 }
 //createTask function 
@@ -87,4 +120,6 @@ function createTask(text, category = "General", deadline = "No deadline", status
     status,
   };
 }
+
+
 
